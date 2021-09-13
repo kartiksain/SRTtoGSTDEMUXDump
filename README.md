@@ -17,6 +17,6 @@ The stdout should show any information about the ts-packet streams
 
 Usage:
 
-./a.out  <IP> <port> <videopath> <audiopath>
+./a.out  IP port videopath audiopath
 
 
