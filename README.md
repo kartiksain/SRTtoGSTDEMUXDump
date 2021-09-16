@@ -1,7 +1,6 @@
 # SRTtoGSTDEMUXDump
 This Project is to get data via SRT protocol and listen through gstreamer  and do demuxing then dump
 
-Test for developer recruitments
 A streaming transport protocol that is being used more and more is SRT ( Github ).
 
 You will build a small program that takes an SRT stream and:
