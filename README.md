@@ -14,8 +14,19 @@ Expected result
 The created files should be put in two separate folders audio and video where the files have the suffix .raw. You can verify that the output files are correct by using ffplay, e.g. the video: ffplay video.raw
 The stdout should show any information about the ts-packet streams
 
+
+Machine Setup to Build
+1) Ubuntu 20.04 LTS
+2) SRT with ffmpeg install
+
+
+Build Instruction
+
+g++ SRTtoGSTDEMUXDump.cpp -o test `pkg-config --cflags --libs gstreamer-1.0
+
+
 Usage:
 
-./a.out  IP port videopath audiopath
+./test  IP port videopath audiopath
 
 
