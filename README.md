@@ -22,7 +22,7 @@ Machine Setup to Build
 
 Build Instruction
 
-g++ SRTtoGSTDEMUXDump.cpp -o test `pkg-config --cflags --libs gstreamer-1.0
+g++ SRTtoGSTDEMUXDump.cpp -o test `pkg-config --cflags --libs gstreamer-1.0'
 
 
 Usage:
