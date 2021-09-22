@@ -159,12 +159,32 @@ void GSTPipeline::pad_added_handler (GstElement *src, GstPad *new_pad, void  *da
 bool GSTPipeline::gstINIT()
 {
     /* GSTREAMER Initialisation */
-    gst_init(NULL, nullptr);
+    
+    //gst_init(NULL, NULL);
+    // It does not have any return so call another api to confirm
+
+    GError* gsterror=NULL;
+    if(!gst_init_check(NULL,NULL,&gsterror))
+    {
+        std::cout<<"Unable to Init: "<<gsterror->message<<"\n";
+        g_error_free (gsterror);
+        return false;
+    }
+
 
     loop = g_main_loop_new(NULL, FALSE);
+    if(!loop)
+    {
+        std::cout<<"Main Loop Creation failed\n";
+        return false;
+    }
 
     /* Create gstreamer elements */
     pipeline = gst_pipeline_new("srt-example");
+    if (!GST_IS_PIPELINE (pipeline)) {
+        return false;
+    }
+
     srtsource = gst_element_factory_make("srtclientsrc", "srtsource");
     cqueue = gst_element_factory_make("queue", "cqueue");
     demuxer = gst_element_factory_make("tsdemux", "demuxer");
@@ -174,7 +194,7 @@ bool GSTPipeline::gstINIT()
     vsink = gst_element_factory_make("filesink", "vsink");
 
 
-    if (!pipeline || !srtsource || !cqueue || !demuxer || !aqueue || !vqueue || !asink || !vsink) {
+    if (!srtsource || !cqueue || !demuxer || !aqueue || !vqueue || !asink || !vsink) {
         std::cout<<"One element could not be created. Exiting.\n";
         return false;
     }
@@ -186,6 +206,7 @@ void GSTPipeline::setElementProperties(RecieveSRT *srtInfo)
     /* set properties */
     std::string srtin="srt://";
     srtin = srtin + srtInfo->getIPAdd() + ":" + srtInfo->getPortNo();
+    //all are void type in return so always specify carefully
     g_object_set(G_OBJECT (srtsource), "uri", srtin.c_str(), NULL);
     g_object_set(G_OBJECT (srtsource), "mode",0, NULL);
     g_object_set(asink, "location", srtInfo->getAudioLoc().c_str(), NULL);
